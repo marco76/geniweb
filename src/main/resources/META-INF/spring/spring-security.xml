@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd
+        ">
+    <!-- Root Context: defines shared resources visible to all other web components -->
+
+    <security:http pattern="/access/**" security="none"/>
+
+    <security:http auto-config="true"  use-expressions="true">
+
+        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/logout" access="permitAll"/>
+        <security:intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/project/*" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/idea/*" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/user/*" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/" access="permitAll"/>
+
+        <security:intercept-url pattern="/public/*" access="permitAll"/>
+        <security:intercept-url pattern="/user" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+
+        <security:form-login login-page="/login"
+                    authentication-failure-url="/login/error"
+                    always-use-default-target="true"
+                    default-target-url="/login/success"/>
+
+        <security:access-denied-handler error-page="/denied"/>
+
+        <security:logout invalidate-session="true"
+                logout-success-url="/logout/success"
+                logout-url="/logout"/>
+    </security:http>
+
+    <security:authentication-manager>
+       <security:authentication-provider user-service-ref="myUserDetailsService">
+           <security:password-encoder ref="passwordEncoder">
+           <security:salt-source ref="saltSource"/>
+           </security:password-encoder>
+       </security:authentication-provider>
+   </security:authentication-manager>
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+    <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"
+          p:userPropertyToUse="username"/>
+</beans>

@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<form th:fragment = "uploaderFragment" action="uploadSuccess.html" th:action="@{/fileUpload}" method="post" enctype="multipart/form-data">
+    <input type="file" name="myFile" />
+    <input type="submit" />
+</form>

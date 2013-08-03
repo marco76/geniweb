@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        >
+
+<head th:include="base/thymeleaf/layout :: headerFragment">
+</head>
+
+<body>
+
+
+<div th:include="base/thymeleaf/layout :: menuFragment">
+</div>
+<div class="container">
+<form th:action="@{/j_spring_security_check}"  class="form-horizontal" method="post">
+    <legend>Log in</legend>
+    <div th:if="${loginError}" class="alert alert-error">Wrong user or password</div>
+
+    <div class="control-group">
+        <label class="control-label" for="j_username">Email</label>
+        <div class="controls">
+         <input type="text" id="j_username" name="j_username" />
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="j_password">Password</label>
+        <div class="controls">
+
+        <input type="password" id="j_password" name="j_password" /> <br />
+            </div>
+        </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit">Log in</button>
+        </div>
+    </div>
+
+</form>
+</div>
+<div th:include="base/thymeleaf/layout :: footerFragment">
+
+</div>
+
+
+</body>
+
+</html>

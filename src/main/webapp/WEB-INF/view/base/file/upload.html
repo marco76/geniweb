@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        >
+
+<head th:include="base/thymeleaf/layout :: headerFragment">
+</head>
+
+<body>
+
+
+<div th:include="base/thymeleaf/layout :: menuFragment">
+</div>
+<div class="container">
+
+    <form th:fragment = "uploaderFragment" action="uploadSuccess.html" th:action="@{/fileUpload}" method="post" enctype="multipart/form-data">
+        <input type="file" name="myFile" />
+        <input type="submit" />
+    </form>
+
+</div>
+<div th:include="base/thymeleaf/layout :: footerFragment">
+
+</div>
+
+
+</body>
+
+</html>
